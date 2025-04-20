@@ -1,6 +1,4 @@
-Here’s the complete `README.md` in markdown format, ready for you to copy and paste into your project:
 
-```markdown
 # 🧠 1001Fonts Scraper & Downloader
 
 This repository contains scripts for scraping and downloading fonts from **[1001fonts.com](https://www.1001fonts.com/)**. The process is divided into two steps:
@@ -96,6 +94,3 @@ Before starting the downloading process:
 ## 🖤 Happy Scraping & Font Hunting!
 
 If you have any questions or issues, feel free to open an issue in the repository.
-```
-
-This is an all-in-one markdown for your `README.md`. You can copy and paste it directly into your project!
