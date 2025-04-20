@@ -1,96 +1,141 @@
+# 🎯 1001Fonts-Scraper-Downloader
 
-# 🧠 1001Fonts Scraper & Downloader
-
-This repository contains scripts for scraping and downloading fonts from **[1001fonts.com](https://www.1001fonts.com/)**. The process is divided into two steps:
-
-1. **Scrape Font Metadata and Images**
-2. **Download Font ZIP Files**
+A two-step Python project that helps you scrape font metadata and preview images from **[1001fonts.com](https://www.1001fonts.com/)**, filter them manually, and download only the desired fonts automatically.
 
 ---
 
-## 📁 Project Structure
+## ✨ Features
+
+- 🔍 Scrape all font names, images, and direct ZIP download links.
+- 🖼️ Download font preview images and store them in the `font/` folder.
+- 🧹 Easily review images and delete unwanted fonts.
+- ⬇️ Download filtered font ZIPs using a separate downloader script.
+- ⚡ Uses `concurrent.futures` and `rich` for fast performance with beautiful progress bars.
+- 🧠 Avoids re-downloading already available files.
+- 📁 Organized into clean folders and JSON metadata for extensibility.
+
+---
+
+## 🧠 How It Works
+
+### 📄 Step 1: Run `1001font_scraper.py`
+
+This script will:
+
+1. Scrape all paginated font listings from 1001fonts.com.
+2. Extract:
+   - Font title
+   - Direct font ZIP download link
+   - Preview image link
+3. Assign a **unique ID** for each font.
+4. Save all data into `fonts_data_1001fonts.json`.
+5. Download and save preview images into the `font/` folder, named by their unique ID (e.g., `abc123.png`).
+
+---
+
+### 📄 Step 2: Run `1001font_downloader.py`
+
+After you manually **review and delete** preview images you don't want:
+
+1. This script loads `fonts_data_1001fonts.json`.
+2. It checks for each font:
+   - If the preview image still exists → keep.
+   - If the ZIP file is already downloaded → skip.
+   - If not downloaded → download into `downloaded_fonts/`, named by unique ID.
+
+✅ You get only the fonts you want, without duplicates!
+
+---
+
+## 📦 Project Structure
 
 ```
-.
-├── 1001fonts/
-│   ├── scrape_1001fonts.py          # Step 1: Scrape 1001fonts metadata + preview images
-│   ├── download_fonts_1001fonts.py  # Step 2: Download 1001fonts zip fonts
-│   ├── font/                        # Preview images saved here
-│   ├── downloaded_fonts/            # Final zip files go here
-│   └── fonts_data_1001fonts.json    # Font metadata from 1001fonts
-│
-├── README.md                        # You're here!
-└── requirements.txt
+1001Fonts-Scraper-Downloader/
+├── 1001font_scraper.py           # Step 1: Scrape metadata and preview images
+├── 1001font_downloader.py        # Step 2: Download ZIP font files
+├── requirements.txt              # Python dependencies
+├── readme.md                     # This documentation
+├── fonts_data_1001fonts.json     # Auto-generated JSON of font metadata
+├── font/                         # Preview images downloaded here
+└── downloaded_fonts/             # ZIP files downloaded here
 ```
 
 ---
 
-## 📦 Install Dependencies
+## 🛠️ Requirements
 
-To install the required libraries for this project, run the following command:
+Install all required Python libraries using:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-**requirements.txt**:
+> **Python 3.7+ recommended**
 
-```
-requests
-beautifulsoup4
-html5lib
-rich
+---
+
+## 📥 Example Entry in `fonts_data_1001fonts.json`
+
+```json
+{
+  "id": "abc123",
+  "title": "Cool Font",
+  "font_image": "https://www.1001fonts.com/path-to-image.png",
+  "font_link": "https://www.1001fonts.com/download/cool-font.zip"
+}
 ```
 
 ---
 
-## 🔤 1001Fonts Workflow
+## 🚀 Usage
 
-### Step 1: Scrape Font Data from 1001fonts
-
-To scrape font metadata (name, image, download link) and preview images:
+### 🔎 Step 1 - Scrape and Save Fonts
 
 ```bash
-cd 1001fonts
-python scrape_1001fonts.py
+python 1001font_scraper.py
 ```
 
-- This script will scrape the font listings from 1001fonts.
-- The metadata (such as font names, preview images, download links) will be saved to `fonts_data_1001fonts.json`.
-- Preview images will be saved to the `font/` folder.
+This will populate:
+
+- `fonts_data_1001fonts.json`
+- Preview images inside `font/`
+
+🔍 **Manually delete** unwanted font previews from the `font/` folder.
 
 ---
 
-### Step 2: Download Font ZIP Files
-
-To download the font ZIP files:
+### 📥 Step 2 - Download Selected Fonts
 
 ```bash
-python download_fonts_1001fonts.py
+python 1001font_downloader.py
 ```
 
-- This script will check whether each font ZIP file has already been downloaded.
-- If not, it will download the ZIP file and save it to the `downloaded_fonts/` folder.
-
-**Note**: Before running the downloader, you can manually remove unwanted font previews from the `font/` folder. The downloader will only download ZIP files for the remaining fonts.
+Only the fonts whose preview images still exist will be downloaded into the `downloaded_fonts/` folder.
 
 ---
 
-## 🎯 Summary
+## 🧹 Cleanup Tip
 
-- **Step 1 (Scraping)**: Scrapes metadata and saves font preview images.
-- **Step 2 (Downloader)**: Downloads font ZIP files if not already downloaded.
-
----
-
-## 🧹 Clean-up Before Download
-
-Before starting the downloading process:
-- Go to the `font/` folder and remove any unwanted font preview images.
-- This ensures that only the selected fonts' ZIP files are downloaded.
+After downloading, you may optionally clean up the `font/` folder if not needed anymore.
 
 ---
 
-## 🖤 Happy Scraping & Font Hunting!
+## 💡 Use Cases
 
-If you have any questions or issues, feel free to open an issue in the repository.
+- Curate your own font collection 🎨
+- Offline font library for design projects 💻
+- Font previews for typography research 🔠
+
+---
+
+## 📌 Notes
+
+- This project is for **educational and personal use**.
+- Always respect the site's Terms of Service.
+
+---
+
+
+## 🧑‍💻 Author
+
+Made with ❤️ by [@xlastfire](https://github.com/xlastfire)
